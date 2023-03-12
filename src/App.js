@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  
+      const [toDo,setToDo] = useState('');
+      const [toDos,setToDos] = useState([]);
+        const handleSubmit = (e) =>{
+            e.preventDefault();
+            setToDos(previousState=>{
+              return [...previousState,toDo]
+            })
+        }
+    return(
+        <div>
+        <form onSubmit={handleSubmit}>
+            <input type="text" value={toDo} onChange={(e)=>{setToDo(e.target.value)}} />
+            <input type="submit" />
+        </form>
+        <p>{toDos.map(item=><p>{item}</p>)}</p>
+        </div>
+    )
+  
 }
 
 export default App;
