@@ -2,11 +2,22 @@ import { useState } from "react";
 function App() {
   
       const [toDo,setToDo] = useState('');
-      const [toDos,setToDos] = useState([]);
-        const handleSubmit = (e) =>{
+      const [toDos,setToDos] = useState([])
+      
+      const handleDelete = (id)=>{
+        let updateToDos = toDos.filter(item=>item.id !== id) ;
+        setToDos(updateToDos);
+      }
+      const handleSubmit = (e) =>{
+
+        const newToDo = {
+          id: new Date().getTime(),
+          text: toDo.trim(),
+          completed: false
+        };
             e.preventDefault();
             setToDos(previousState=>{
-              return [...previousState,toDo]
+              return [...previousState,newToDo]
             })
         }
     return(
@@ -15,7 +26,12 @@ function App() {
             <input type="text" value={toDo} onChange={(e)=>{setToDo(e.target.value)}} />
             <input type="submit" />
         </form>
-        <p>{toDos.map(item=><p>{item}</p>)}</p>
+        <div>{toDos.map(item=>(
+        <div>
+        <p>{item.text}</p>
+        <button onClick={()=>handleDelete(item.id)}>Delete</button>
+        </div>
+        ))}</div>
         </div>
     )
   
